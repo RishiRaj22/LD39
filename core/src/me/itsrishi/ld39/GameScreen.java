@@ -1,10 +1,13 @@
 package me.itsrishi.ld39;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,17 +20,27 @@ import java.util.HashMap;
  * @author Rishi Raj
  */
 
-public class GameScreen implements Screen {
-    public static final int WIDTH = 800;
+public class GameScreen implements Screen, InputProcessor {
+    private boolean begun = false;
+    public static final int WIDTH = 1120;
     public static final int HEIGHT = 600;
-    public static final int SCREEN_PHONE_COUNT = 5;
+    public static final int SCREEN_PHONE_COUNT = 7;
     private static HashMap<Integer, Sprite> phoneSprites;
     private static HashMap<Integer, Sprite> chargerHeads;
+    private final ScreenChangeCommunicator communicator;
     ShapeRenderer renderer;
     Texture phoneTexture, chargerTexture;
     SpriteBatch batch;
     private ArrayList<Phone> phones;
     private ArrayList<Charger> chargers;
+    private int focussed = 0;
+    private Charger chargerFocussed;
+    BitmapFont font = new BitmapFont();
+
+
+    public GameScreen(ScreenChangeCommunicator communicator) {
+        this.communicator = communicator;
+    }
 
     public static HashMap<Integer, Sprite> getPhoneSprites() {
         return phoneSprites;
@@ -39,29 +52,25 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
         renderer = new ShapeRenderer();
         batch = new SpriteBatch();
         initPhoneSprites();
         initChargerSprites();// Charger sprite has a dependency on phone sprite. so call phone sprite init first
-        Phone phone = new Phone(0, 100, Phone.COLOR_WHITE + Phone.BEZEL_LESS, 4);
-        Phone phone2 = new Phone(1, 100, Phone.COLOR_WHITE + Phone.BRICK, 4);
-        Phone phone3 = new Phone(2, 100, Phone.COLOR_WHITE + Phone.OLD_SCHOOL, 4);
-        Phone phone4 = new Phone(3, 100, Phone.COLOR_WHITE + Phone.APPUL, 4);
-        Phone phone5 = new Phone(4, 100, Phone.COLOR_BLACK + Phone.DROID, 4);
+        Phone phone = new Phone(0,Phone.COLOR_WHITE + Phone.BEZEL_LESS);
+        Phone phone2 = new Phone(4,Phone.COLOR_BLACK + Phone.BEZEL_LESS);
+        Phone phone3 = new Phone(6,Phone.COLOR_BLACK + Phone.OLD_SCHOOL);
         phones = new ArrayList<Phone>();
         chargers = new ArrayList<Charger>();
         phones.add(phone);
         phones.add(phone2);
         phones.add(phone3);
-        phones.add(phone4);
-        phones.add(phone5);
-        Charger charger = new Charger(3, Charger.COLOR_WHITE + Charger.APPUL);
-        Charger charger2 = new Charger(2, Charger.COLOR_WHITE + Charger.OLD_SCHOOL);
-        Charger charger3 = new Charger(0, Charger.COLOR_BLACK + Charger.USB);
-        Charger charger4 = new Charger(1, Charger.COLOR_BLACK + Charger.OLD_SCHOOL);
-        chargers.add(charger);
+
+        Charger charger2 = new Charger(3, Charger.COLOR_BLACK + Charger.OLD_SCHOOL);
+        Charger charger4 = new Charger(0, Charger.COLOR_WHITE + Charger.USB);
+        Charger charger0 = new Charger(1, Charger.COLOR_BLACK + Charger.USB);
+        chargers.add(charger0);
         chargers.add(charger2);
-        chargers.add(charger3);
         chargers.add(charger4);
     }
 
@@ -107,7 +116,27 @@ public class GameScreen implements Screen {
     }
 
     private void update(float delta) {
+        if(!begun) {
+            return;
+        }
+        try {
+            updatePhones(delta);
+        } catch (ChargeException e) {
+            communicator.changeScreenTo(new GameOverScreen());
+        }
+    }
 
+    private void updatePhones(float delta) throws ChargeException {
+        outer:
+        for (Phone phone : phones) {
+            for (Charger charger : chargers) {
+                if (charger.getPosition() == phone.getPosition()) {
+                    phone.updateCharge(delta, true);
+                    continue outer;
+                }
+            }
+            phone.updateCharge(delta, false);
+        }
     }
 
     @Override
@@ -115,10 +144,21 @@ public class GameScreen implements Screen {
         update(delta);
         Gdx.gl.glClearColor(192f / 255, 108f / 255, 53f / 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        drawFocussed();
         drawWires(batch); //Batch begins inside drawWires method
         drawBg(batch);
-        drawPhones(batch);
-        batch.end();
+        if(!begun)
+            font.draw(batch,"Press any key to start game",WIDTH/2,HEIGHT/2);
+        drawPhones(batch);//Batch ends inside drawPhones method
+    }
+
+    private void drawFocussed() {
+        renderer.setAutoShapeType(true);
+        renderer.begin();
+        renderer.set(ShapeRenderer.ShapeType.Filled);
+        renderer.rect(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT), HEIGHT - 20, GameScreen.WIDTH / SCREEN_PHONE_COUNT, 20);
+        renderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
     private void drawBg(SpriteBatch batch) {
@@ -132,17 +172,23 @@ public class GameScreen implements Screen {
         renderer.begin();
         renderer.set(ShapeRenderer.ShapeType.Filled);
         for (Charger charger : chargers) {
+            if (charger.getPosition() < 0)
+                continue;
             Sprite sprite = charger.getSprite();
-            if((charger.getType() & Charger.COLOR_WHITE) != 0)
+            if ((charger.getType() & Charger.COLOR_WHITE) != 0)
                 renderer.setColor(Color.WHITE);
             else renderer.setColor(Color.BLACK);
-            System.out.println("y: "+sprite.getY());
-            renderer.rect(sprite.getX() + charger.getWireXOffset() , 100 + sprite.getOriginY(), 5,HEIGHT - 135);
+            renderer.rect(sprite.getX() + charger.getWireXOffset(), 100 + sprite.getOriginY(), 5, HEIGHT - 135);
         }
         renderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
-        for(Charger charger: chargers) {
+        for (Charger charger : chargers) {
+            if (charger.getPosition() < 0) {
+                Sprite sprite = charger.getSprite();
+                sprite.setX(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT));
+                charger.getSprite().draw(batch);
+            }
             charger.getSprite().draw(batch);
         }
     }
@@ -151,6 +197,29 @@ public class GameScreen implements Screen {
         for (Phone phone : phones) {
             phone.getSprite().draw(batch);
         }
+        batch.end();
+        Gdx.gl.glEnable(GL20.GL_ARRAY_BUFFER_BINDING);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        renderer.setAutoShapeType(true);
+        renderer.begin();
+        renderer.set(ShapeRenderer.ShapeType.Filled);
+        for (Phone phone : phones) {
+            Sprite sprite = phone.getSprite();
+            renderer.setColor(Color.DARK_GRAY);
+            renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight());
+            renderer.rect(sprite.getX() + phone.getBatteryXOffset() + 7, phone.getBatteryYOffset() + phone.getBatteryMaxHeight() + 3, 25 - 2*7, 2);
+            renderer.setColor(Color.GREEN);
+            renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight() * phone.getCharge());
+
+            if(phone.getCharge() > 0.75f || phone.getCharge() < 0.25f) {
+                System.out.println("Red for phone "+ phone.getPosition());
+                renderer.setColor(Color.RED);
+                renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160, 10, 30);
+                renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160 - 10, 10, 5);
+            }
+        }
+        renderer.end();
     }
 
     @Override
@@ -176,5 +245,83 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if(!begun)
+            begun = true;
+        if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
+            focussed = --focussed < 0 ? SCREEN_PHONE_COUNT - 1 : focussed;
+            return true;
+        }
+        if (keycode == Input.Keys.D || keycode == Input.Keys.RIGHT) {
+            focussed = (focussed + 1) % SCREEN_PHONE_COUNT;
+            return true;
+        }
+        if (keycode == Input.Keys.S || keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER) {
+            if (chargerFocussed == null) {
+                for (Charger charger : chargers) {
+                    if (charger.getPosition() == focussed) {
+                        chargerFocussed = charger;
+                    }
+                }
+                if (chargerFocussed != null)
+                    chargerFocussed.setPosition(-1);
+                return true;
+            }
+            for (Phone phone : phones) {
+                if (phone.getPosition() == focussed) {
+                    if (chargerFocussed.isModelCompatible(phone.getModel())) {
+                        chargerFocussed.setPosition(focussed);
+                        chargerFocussed = null;
+                        return true;
+                    }
+                    return true;
+                }
+            }
+            for(Charger charger: chargers) {
+                if(charger.getPosition() == focussed)
+                    return true;
+            }
+            chargerFocussed.setPosition(focussed);
+            chargerFocussed = null;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

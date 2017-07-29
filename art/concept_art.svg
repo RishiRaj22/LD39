@@ -32,9 +32,9 @@
      showgrid="false"
      inkscape:current-layer="svg2"
      inkscape:document-units="px"
-     inkscape:cy="-11202.938"
-     inkscape:cx="4771.1797"
-     inkscape:zoom="0.11313708"
+     inkscape:cy="-11816.609"
+     inkscape:cx="321.40082"
+     inkscape:zoom="0.05656854"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      borderopacity="1.0"
@@ -1427,17 +1427,19 @@
      height="2048"
      x="22.003418"
      y="10973.9"
-     inkscape:export-filename="D:\My Games\LD39\android\assets\phones.png"
+     inkscape:export-filename="D:\My Games\LD39\android\assets\phones2.png"
      inkscape:export-xdpi="45"
      inkscape:export-ydpi="45" />
   <g
-     id="g6931"
-     transform="matrix(0.27306472,0,0,0.27306472,3792.2816,8875.985)"
-     inkscape:export-filename="D:\My Games\LD39\android\assets\phones.png"
+     id="g6923"
+     transform="matrix(0.27306472,0,0,0.27306472,3792.2816,9024.4889)" />
+  <g
+     id="g3288"
+     inkscape:export-filename="D:\My Games\LD39\android\assets\phones2.png"
      inkscape:export-xdpi="45"
      inkscape:export-ydpi="45">
     <g
-       transform="translate(0,218.84155)"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2816,8935.7429)"
        id="g6927">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1456,28 +1458,26 @@
          id="rect6651"
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
+    <rect
+       ry="40.607746"
+       y="11686.358"
+       x="-4587.3062"
+       height="2629.1072"
+       width="1478.8728"
+       id="rect6895"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2816,9024.4889)" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect6897"
+       width="1361.0371"
+       height="2336.4167"
+       x="-4528.3882"
+       y="11723.94"
+       ry="0"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2816,9024.4889)" />
     <g
-       transform="translate(0,543.84155)"
-       id="g6923">
-      <rect
-         ry="40.607746"
-         y="11686.358"
-         x="-4587.3062"
-         height="2629.1072"
-         width="1478.8728"
-         id="rect6895"
-         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
-      <rect
-         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-         id="rect6897"
-         width="1361.0371"
-         height="2336.4167"
-         x="-4528.3882"
-         y="11723.94"
-         ry="0" />
-    </g>
-    <g
-       transform="translate(736.3961,-125)"
+       transform="matrix(0.27306472,0,0,0.27306472,3993.3654,8841.8519)"
        id="g6741">
       <rect
          ry="274.19165"
@@ -1513,7 +1513,7 @@
       </g>
     </g>
     <g
-       transform="translate(4.3908284e-4,3595.1267)"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2817,9857.6873)"
        id="g6748">
       <rect
          ry="105.45399"
@@ -1533,7 +1533,7 @@
          ry="0" />
     </g>
     <g
-       transform="translate(-2262.7417,3877.0645)"
+       transform="matrix(0.27306472,0,0,0.27306472,3174.4067,9934.6745)"
        id="g6760">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1677,7 +1677,7 @@
       </g>
     </g>
     <g
-       transform="translate(0,384.45361)"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2816,8980.9657)"
        id="g6907">
       <path
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#181818;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1725,7 +1725,7 @@
          sodipodi:nodetypes="sssssssss" />
     </g>
     <g
-       transform="translate(0,699.43994)"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2816,9066.9774)"
        id="g6915">
       <path
          sodipodi:nodetypes="cccccccc"
@@ -1774,7 +1774,7 @@
     </g>
     <g
        id="g6816"
-       transform="translate(-2262.7417,327.06445)">
+       transform="matrix(0.27306472,0,0,0.27306472,3174.4067,8965.2948)">
       <rect
          ry="87.993759"
          y="8358.4287"
@@ -1913,7 +1913,7 @@
          y="9729.0596" />
     </g>
     <g
-       transform="translate(0,-6.4714355)"
+       transform="matrix(0.27306472,0,0,0.27306472,3792.2816,8874.2179)"
        id="g6899">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1934,7 +1934,7 @@
     </g>
     <g
        id="g6883"
-       transform="translate(100,3425)">
+       transform="matrix(0.27306472,0,0,0.27306472,3819.5881,9811.2317)">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
          id="rect6885"
@@ -1972,7 +1972,7 @@
   <g
      id="g7274"
      transform="matrix(0.86885246,0,0,0.86885246,3491.9457,-10865.02)"
-     inkscape:export-filename="D:\My Games\LD39\android\assets\phones.png"
+     inkscape:export-filename="D:\My Games\LD39\android\assets\phones2.png"
      inkscape:export-xdpi="45"
      inkscape:export-ydpi="45">
     <path
