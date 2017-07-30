@@ -19,7 +19,7 @@ public class GameOverScreen implements Screen, InputProcessor {
     private final ScreenChangeCommunicator communicator;
     ShapeRenderer renderer = new ShapeRenderer();
     SpriteBatch batch = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
+    BitmapFont font = new BitmapFont(Gdx.files.internal("40.fnt"),false);
     private boolean restart;
     private boolean isHighScore;
     private int hiscore;

@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -29,12 +30,13 @@ public class GameScreen implements Screen, InputProcessor {
     public static Color bgColor = new Color(192f / 255, 108f / 255, 53f / 255, 1);
     private static HashMap<Integer, Sprite> phoneSprites;
     private static HashMap<Integer, Sprite> chargerHeads;
+    private float gameSpeed;
     private final ScreenChangeCommunicator communicator;
     ShapeRenderer renderer;
     Texture phoneTexture, chargerTexture, bgTexture;
     SpriteBatch batch;
-    BitmapFont font = new BitmapFont();
-    Sound pluggedIn, pluggedOut;
+    BitmapFont font = new BitmapFont(Gdx.files.internal("40.fnt"),false);
+    Sound pluggedIn, pluggedOut,phoneAdd;
     private Random random = new Random();
     private boolean begun = false;
     private ArrayList<Phone> phones;
@@ -45,7 +47,10 @@ public class GameScreen implements Screen, InputProcessor {
     private int score;
     private int lives = 3;
     private float time = 0;
+    private static final float TEXT_DISP_TIME = 3;
     private ArrayList<Float> addPhones = new ArrayList<Float>();
+    // change (e.g. + 100 -1 for life) , position(0 - 5), time (timeBegan)
+    private ArrayList<Float> textDisp = new ArrayList<Float>();
     private Sprite handSprite;
 
 
@@ -63,24 +68,35 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        font.setColor(Color.BLACK);
         pluggedIn = Gdx.audio.newSound(Gdx.files.internal("plug_in.ogg"));
         pluggedOut = Gdx.audio.newSound(Gdx.files.internal("plug_out.ogg"));
+        phoneAdd = Gdx.audio.newSound(Gdx.files.internal("phone_add.ogg"));
         Gdx.input.setInputProcessor(this);
         renderer = new ShapeRenderer();
         batch = new SpriteBatch();
         bgTexture = new Texture("bg.png");
+        textDisp = new ArrayList<Float>();
         handSprite = new Sprite(new Texture("hand.png"));
         initPhoneSprites();
         initChargerSprites();// Charger sprite has a dependency on phone sprite. so call phone sprite init first
         phones = new ArrayList<Phone>();
         chargers = new ArrayList<Charger>();
-        addPhone(0);
-        addPhone(1);
-        addPhone(2);
-        addPhone(3);
-        addPhone(4);
-        addPhone(5);
-        addPhone(6);
+        ArrayList<Integer> poses = new ArrayList<Integer>();
+        poses.add(0);
+        poses.add(1);
+        poses.add(2);
+        poses.add(3);
+        poses.add(4);
+        poses.add(5);
+        poses.add(6);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses),0);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses),0);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses),0);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses), 5);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses), 12);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses), 9);
+        schedulePhoneAdd(chooseRandomFromArrayList(poses), 16);
 
         int val = random.nextBoolean() ? Charger.COLOR_BLACK : Charger.COLOR_WHITE;
         Charger charger0 = new Charger(0, blackOrWhite() + Charger.USB);
@@ -95,6 +111,12 @@ public class GameScreen implements Screen, InputProcessor {
         chargers.add(charger2);
         chargers.add(charger3);
         chargers.add(charger4);
+    }
+    private int chooseRandomFromArrayList(ArrayList<Integer> integers) {
+        int pos = random.nextInt(integers.size());
+        int val = integers.get(pos);
+        integers.remove(pos);
+        return val;
     }
 
     private void initPhoneSprites() {
@@ -125,6 +147,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void addPhone(int position) {
+        phoneAdd.play();
         int old = 0, usb = 0, appul = 0;
         for (Phone phone : phones) {
             if ((phone.getModel() & Phone.APPUL) != 0)
@@ -133,8 +156,6 @@ public class GameScreen implements Screen, InputProcessor {
                 old++;
             else usb++;
         }
-        System.out.printf("Adding phone at position: %d\n", position);
-        System.out.printf("appul : %d usb : %d old : %d\n", appul, usb, old);
         int val = blackOrWhite();
         boolean choose = random.nextBoolean();
         if (choose && appul == 0)
@@ -153,21 +174,30 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void submitPhone(Phone phone) {
+        if(phone.getCharge() < 1 && phone.getCharge() > 0)
+            return;
         int pos = phone.getPosition();
         int rate = 1;
-        if (time - phone.getInstatntiationTime() < 4)
-            rate = 0;
-        if (time - phone.getInstatntiationTime() < 10)
+        if (time - phone.getInstatntiationTime() < 15)
+            rate = 10;
+        else if (time - phone.getInstatntiationTime() < 18)
             rate = 5;
-        if (time - phone.getInstatntiationTime() < 12)
+        else if (time - phone.getInstatntiationTime() < 24)
             rate = 3;
-        if (time - phone.getInstatntiationTime() < 20)
+        else if (time - phone.getInstatntiationTime() < 50)
             rate = 2;
 
-        score += (phone.getCharge() - 0.5f) * 100 * rate;
+        float change = 100 * rate;
+
+        if(phone.getCharge() > 0) {
+            score += change;
+            textDisp.add((float) change);
+            textDisp.add((float) phone.getPosition());
+            textDisp.add((float) time);
+        }
 
         phones.remove(phone);
-        schedulePhoneAdd(pos, 5 + (random.nextBoolean() ? 0 : 2));
+        schedulePhoneAdd(pos, 2 + (random.nextBoolean() ? 0 : 1));
     }
 
     private void initChargerSprites() {
@@ -200,11 +230,14 @@ public class GameScreen implements Screen, InputProcessor {
         }
         time += delta;
         updatePhones(delta);
+        float SPEED_CHANGE_TIME = 240;
+        float pro = (float) (time / SPEED_CHANGE_TIME * 0.5);
+        if(pro > 1) pro = 1;
+        gameSpeed = 1 + pro;
     }
 
     private void updatePhones(float delta) {
         if (addPhones != null && addPhones.size() != 0) {
-            System.out.printf("%f seconds to go\n", time - addPhones.get(0));
             if (time > addPhones.get(0)) {
                 float val = addPhones.get(1);
                 addPhone((int) val);
@@ -218,18 +251,18 @@ public class GameScreen implements Screen, InputProcessor {
             try {
                 for (Charger charger : chargers) {
                     if (charger.getPosition() == phone.getPosition() && charger.isModelCompatible(phone.getModel())) {
-                        phone.updateCharge(delta, true);
+                        phone.updateCharge(delta * gameSpeed, true);
                         continue outer;
                     }
                 }
-                phone.updateCharge(delta, false);
+                phone.updateCharge(delta * gameSpeed, false);
             } catch (ChargeException e) {
                 submitPhone(phone);
-                lives--;
-                if (lives < 0) {
+                    lives--;
+                if (lives <= 0) {
                     GameOverScreen screen = new GameOverScreen(communicator, score);
                     dispose();
-                    communicator.changeScreenTo(screen, 0.8f, Color.BLACK);
+                    communicator.changeScreenTo(screen);
                 }
             }
         }
@@ -247,17 +280,37 @@ public class GameScreen implements Screen, InputProcessor {
         if (!begun)
             font.draw(batch, "Press any key to start game", WIDTH / 2, HEIGHT / 2);
         else {
-            font.draw(batch, "Score :" + score, 10, HEIGHT - 30);
-            font.draw(batch, "Lives :" + lives, WIDTH - 100, HEIGHT - 30);
+            font.draw(batch, "Score :" + score, 20, HEIGHT - 30);
+            font.draw(batch, "Lives :" + lives, WIDTH - 180, HEIGHT - 30);
         }
         drawPhones(batch); //Batch ends inside drawPhones method
-        drawHand(); //Batch begins and ends inside this
+
+        batch.begin();
+        drawHand();
+        drawPopupText();
+        batch.end();
+
         update(delta);
+    }
+
+    private void drawPopupText() {
+        if(textDisp.size() <= 0) {
+            return;
+        }
+        if(textDisp.get(2) + TEXT_DISP_TIME < time) {
+            textDisp.remove(0);
+            textDisp.remove(0);
+            textDisp.remove(0);
+        }
+            for(int i = 0; i < textDisp.size(); i+=3) {
+            float position = textDisp.get(i + 1);
+            float x = GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + position * GameScreen.WIDTH / (SCREEN_PHONE_COUNT);
+            font.draw(batch,(textDisp.get(0) < 0) ?"Life lost":String.format("+%4.0f",textDisp.get(i)),x,HEIGHT/3);
+        }
     }
 
 
     private void drawHand() {
-        batch.begin();
         float x = GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT);
         handSprite.setX(x - 10);
         handSprite.setY(5);
@@ -268,7 +321,6 @@ public class GameScreen implements Screen, InputProcessor {
             handSprite.setY(handSprite.getY() - 85);
         handSprite.draw(batch);
         handSprite.setY(handSprite.getY() + 85);
-        batch.end();
     }
 
 
@@ -330,7 +382,11 @@ public class GameScreen implements Screen, InputProcessor {
             renderer.setColor(Color.DARK_GRAY);
             renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight());
             renderer.rect(sprite.getX() + phone.getBatteryXOffset() + 7, phone.getBatteryYOffset() + phone.getBatteryMaxHeight() + 3, 25 - 2 * 7, 2);
-            renderer.setColor(Color.GREEN);
+            renderer.setColor(1 - phone.getCharge(),phone.getCharge(),0,1);
+            if((int)phone.getCharge() == 1) {
+                renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160, 10, 30);
+                renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160 - 10, 10, 5);
+            }
             renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight() * phone.getCharge());
 
             if (phone.getCharge() < 0.2f && !phone.isCharging) {

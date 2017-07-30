@@ -36,7 +36,6 @@ public class TransitionScreen implements Screen {
             renderer.set(ShapeRenderer.ShapeType.Filled);
             float alpha = (float)Math.pow(time, 2.5);
             renderer.setColor(transitionColor.r, transitionColor.g, transitionColor.b, alpha);
-            System.out.printf("%f %f %f %f\n",transitionColor.r, transitionColor.g, transitionColor.b, alpha);
             renderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             renderer.end();
         }

@@ -15,8 +15,8 @@
    version="1.1"
    id="svg2"
    viewBox="0 0 1052.3622 744.09448"
-   height="210mm"
-   width="297mm"
+   height="744.09448"
+   width="1052.3622"
    inkscape:export-filename="D:\My Games\LD39\android\assets\usb_charger_head.png"
    inkscape:export-xdpi="52.910389"
    inkscape:export-ydpi="52.910389">
@@ -30,11 +30,11 @@
      showguides="true"
      inkscape:snap-others="true"
      showgrid="false"
-     inkscape:current-layer="svg2"
+     inkscape:current-layer="g5083"
      inkscape:document-units="px"
-     inkscape:cy="-9081.6478"
-     inkscape:cx="-2699.3711"
-     inkscape:zoom="0.04"
+     inkscape:cy="-5211.565"
+     inkscape:cx="7769.9164"
+     inkscape:zoom="0.16"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      borderopacity="1.0"
@@ -47,7 +47,8 @@
      inkscape:object-paths="true"
      inkscape:snap-nodes="true"
      inkscape:snap-global="false"
-     inkscape:snap-bbox="true">
+     inkscape:snap-bbox="true"
+     units="px">
     <sodipodi:guide
        id="guide3732"
        orientation="0,1"
@@ -235,16 +236,6 @@
        y1="11021.48"
        x2="-103.65301"
        y2="11440.23" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6523"
-       id="linearGradient4979"
-       x1="275"
-       y1="10131.595"
-       x2="5037.5"
-       y2="12844.095"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(1.2252646e-6,3.2135435e-5)" />
   </defs>
   <metadata
      id="metadata7">
@@ -705,7 +696,7 @@
      height="3519.6428"
      width="6570"
      id="rect4971"
-     style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient4979);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+     style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#35a8c1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
      inkscape:export-filename="D:\My Games\LD39\android\assets\bg.png"
      inkscape:export-xdpi="15.342467"
      inkscape:export-ydpi="15.342467" />
@@ -1205,22 +1196,25 @@
          id="rect4224"
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
-    <rect
-       transform="matrix(0,-1,1,0,0,0)"
-       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       id="rect4234"
-       width="365.18216"
-       height="798.62262"
-       x="-5223.1772"
-       y="1621.5992" />
-    <rect
-       transform="matrix(0,-1,1,0,0,0)"
-       y="1529.2159"
-       x="-5136.2837"
-       height="53.796406"
-       width="205.57916"
-       id="rect4236"
-       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <g
+       id="g5079">
+      <rect
+         y="1621.5992"
+         x="-5223.1772"
+         height="798.62262"
+         width="365.18216"
+         id="rect4234"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         transform="matrix(0,-1,1,0,0,0)" />
+      <rect
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="rect4236"
+         width="205.57916"
+         height="53.796406"
+         x="-5136.2837"
+         y="1529.2159"
+         transform="matrix(0,-1,1,0,0,0)" />
+    </g>
     <rect
        y="468.8222"
        x="-3223.325"
@@ -1419,26 +1413,26 @@
        sodipodi:nodetypes="cccccccc"
        inkscape:connector-curvature="0"
        id="rect4974"
-       d="m -1292.6407,4334.1042 -150.5781,143.25 150.5781,0 0,2441.75 1219.716817,0 234.345703,-206.25 0,-2378.75 z"
+       d="m -1492.6407,4209.1042 -150.5781,143.25 150.5781,0 0,2441.75 1219.71682,0 234.3457,-206.25 0,-2378.75 z"
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#181818;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     <rect
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#262626;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        id="rect3946"
        width="1376.7188"
        height="2447.5"
-       x="-1443.2192"
-       y="4477.353"
+       x="-1643.2192"
+       y="4352.353"
        ry="0" />
     <rect
        ry="0"
-       y="4641.9854"
-       x="-1283.8768"
+       y="4516.9854"
+       x="-1483.8768"
        height="1919.6078"
        width="1079.7794"
        id="rect3942"
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     <g
-       transform="matrix(4.7990196,0,0,4.7990196,-2783.5705,-5957.188)"
+       transform="matrix(4.7990196,0,0,4.7990196,-2983.5705,-6082.188)"
        id="g3960">
       <rect
          style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1460,13 +1454,13 @@
        id="rect4003"
        width="455.09995"
        height="251.85143"
-       x="-958.41479"
-       y="6621.2544"
+       x="-1158.4148"
+       y="6496.2544"
        ry="123.71648" />
     <rect
        ry="93.257866"
-       y="6652.2568"
-       x="-914.3692"
+       y="6527.2568"
+       x="-1114.3693"
        height="189.84634"
        width="367.00873"
        id="rect4001"
@@ -1475,7 +1469,7 @@
        sodipodi:nodetypes="sssssssss"
        inkscape:connector-curvature="0"
        id="rect4980"
-       d="m -833.5393,4358.4109 117.94875,0 c 18.36268,0 32.94844,15.181 29.14563,33.1456 l -6,28.3442 c -3.80281,17.9646 -14.78295,33.1456 -33.14563,33.1456 l -99.94875,0 c -18.36268,0 -27.34282,-15.181 -31.14563,-33.1456 l -6,-28.3442 c -3.80281,-17.9646 10.78295,-33.1456 29.14563,-33.1456 z"
+       d="m -1033.5393,4233.4109 117.94875,0 c 18.36268,0 32.94844,15.181 29.14563,33.1456 l -6,28.3442 c -3.80281,17.9646 -14.78295,33.1456 -33.14563,33.1456 l -99.94875,0 c -18.3627,0 -27.3428,-15.181 -31.1456,-33.1456 l -6,-28.3442 c -3.8028,-17.9646 10.7829,-33.1456 29.1456,-33.1456 z"
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     <path
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1711,6 +1705,54 @@
        inkscape:export-filename="D:\My Games\LD39\android\assets\help.png"
        inkscape:export-xdpi="15.342465"
        inkscape:export-ydpi="15.342465" />
+    <g
+       id="g5083"
+       transform="matrix(0,1,-1,0,13765.305,3965.8673)">
+      <rect
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="rect5097"
+         width="1000"
+         height="1000"
+         x="-5527.8052"
+         y="1467.745"
+         transform="matrix(0,-1,1,0,0,0)"
+         inkscape:export-filename="D:\My Games\LD39\android\assets\icon_32.png"
+         inkscape:export-xdpi="2.8800001"
+         inkscape:export-ydpi="2.8800001" />
+      <rect
+         transform="matrix(0,-1,1,0,0,0)"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="rect5085"
+         width="365.18216"
+         height="798.62262"
+         x="-5223.1772"
+         y="1621.5992"
+         inkscape:export-filename="D:\My Games\LD39\android\assets\icon_32.png"
+         inkscape:export-xdpi="2.8800001"
+         inkscape:export-ydpi="2.8800001" />
+      <rect
+         transform="matrix(0,-1,1,0,0,0)"
+         y="1529.2159"
+         x="-5136.2837"
+         height="53.796406"
+         width="205.57916"
+         id="rect5087"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#efeae7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         inkscape:export-filename="D:\My Games\LD39\android\assets\icon_32.png"
+         inkscape:export-xdpi="2.8800001"
+         inkscape:export-ydpi="2.8800001" />
+      <rect
+         y="2134.0994"
+         x="-5223.1772"
+         height="286.12262"
+         width="365.18216"
+         id="rect5095"
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#a55f00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         transform="matrix(0,-1,1,0,0,0)"
+         inkscape:export-filename="D:\My Games\LD39\android\assets\icon_32.png"
+         inkscape:export-xdpi="2.8800001"
+         inkscape:export-ydpi="2.8800001" />
+    </g>
   </g>
   <g
      id="g6384"
@@ -1863,14 +1905,15 @@
      id="path6564"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="scczss" />
-  <rect
-     ry="34.375"
-     y="-1018.1611"
-     x="-8870.041"
-     height="343.75"
-     width="68.75"
+  <path
+     style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:60;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:50;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+     d="m 6845.451,2928.0453 c -171.3086,-19.0001 -200.4572,859.4623 -266.0982,862.0102 -65.641,2.5479 -90.6653,-616.9077 -90.6653,-616.9077 0,0 -30.8964,-405.0224 -90.4567,-410.0887 -119.5451,-10.1687 -113.6252,116.2298 -126.6321,425.1964 -26.8082,636.805 -52.2004,597.8025 -112.5919,601.9462 -101.2474,6.9469 -112.8389,-82.5144 -141.6637,-548.4945 -21.0558,-340.3865 -170.156,-426.3779 -189.5137,-99.7182 -7.9632,134.3769 12.2765,436.2837 -13.8184,829.6659 -60.9672,-134.971 -381.9795,-566.4082 -479.4516,-477.4216 -89.9931,82.1585 -27.2784,209.597 141.1388,500.2811 98.245,169.5683 158.4714,251.4726 193.7477,291.036 150.3495,517.029 189.0415,860.7506 672.4577,780.757 500.6139,-82.8391 522.0334,-656.2087 515.5351,-907.9559 316.5916,-736.2588 356.6339,-788.7642 248.9135,-797.3978 -115.8715,-9.2869 -295.1266,475.3771 -323.766,463.5774 -53.3627,-21.9859 234.1735,-877.4858 62.8648,-896.4858 z"
      id="rect6566"
-     style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="zzcssssscsscscssz"
+     inkscape:export-filename="D:\My Games\LD39\android\assets\hand.png"
+     inkscape:export-xdpi="4.819984"
+     inkscape:export-ydpi="4.819984" />
   <rect
      style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
      id="rect6568"
@@ -2449,14 +2492,14 @@
   <flowRoot
      xml:space="preserve"
      id="flowRoot4376"
-     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:262.5px;line-height:125%;letter-spacing:0px;word-spacing:0px;"><flowRegion
+     style="font-style:normal;font-weight:normal;font-size:262.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
        id="flowRegion4378"><rect
          id="rect4380"
          width="2700"
          height="562.5"
          x="-6750"
          y="15994.095"
-         style="font-size:262.5px;" /></flowRegion><flowPara
+         style="font-size:262.5px" /></flowRegion><flowPara
        id="flowPara4382"></flowPara></flowRoot>  <rect
      ry="14.719408"
      y="19393.354"
@@ -3081,12 +3124,29 @@
      inkscape:export-filename="D:\My Games\LD39\android\assets\help.png"
      inkscape:export-xdpi="15.342465"
      inkscape:export-ydpi="15.342465" />
-  <path
-     style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#e1e3db;fill-opacity:0.88235294;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-     d="m -770.03788,7164.5773 0,1796.1366 C -442.16678,8283.5719 242.46085,7513.4254 1670.3723,7164.5773 l -2440.41018,0 z"
-     id="rect4981"
-     inkscape:connector-curvature="0"
+  <g
+     id="g5067"
+     transform="matrix(1.0310487,0,0,1,-105.63453,-6)"
      inkscape:export-filename="D:\My Games\LD39\android\assets\bg.png"
      inkscape:export-xdpi="15.342467"
-     inkscape:export-ydpi="15.342467" />
+     inkscape:export-ydpi="15.342467">
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="rect5064"
+       d="M 810.32865,9343.7484 6632.7241,8572.4925 6872.9905,8711.6864 663.27526,9525.9726 Z"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#4a2a14;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       transform="matrix(0.99147959,0.13026213,-0.13026213,0.99147959,0,0)" />
+    <rect
+       ry="0"
+       y="9530.3516"
+       x="-582.90588"
+       height="1160.3021"
+       width="6262.4863"
+       id="rect5011"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#b56631;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:38;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:16;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="D:\My Games\LD39\android\assets\bg.png"
+       inkscape:export-xdpi="15.342467"
+       inkscape:export-ydpi="15.342467" />
+  </g>
 </svg>

@@ -23,8 +23,7 @@ public class MenuScreen implements Screen, InputProcessor {
 
     public MenuScreen(ScreenChangeCommunicator communicator) {
         this.communicator = communicator;
-        Preferences preferences = Gdx.app.getPreferences("stats");
-        firstRun = preferences.getBoolean("first_run", true);
+        firstRun = true;
     }
 
     @Override
@@ -39,7 +38,6 @@ public class MenuScreen implements Screen, InputProcessor {
                 if (!endFirstRun) {
                     Gdx.gl.glClearColor(0, 0, 0, 1);
                     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-                    System.out.println("Drawing help");
                     batch.begin();
                     batch.draw(help, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                     batch.end();

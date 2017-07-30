@@ -1,5 +1,7 @@
 package me.itsrishi.ld39;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Logger;
 
@@ -21,9 +23,16 @@ class Phone {
     public static final int BRICK = 16;
     public static final int DROID = 32;
     public static final int APPUL = 64;
+    private static Sound highBattery,lowBattery;
+
+    static {
+        highBattery = Gdx.audio.newSound(Gdx.files.local("high_battery.ogg"));
+        lowBattery = Gdx.audio.newSound(Gdx.files.local("low_battery.ogg"));
+    }
     // Current state
     private int position;
     private float charge;
+    private boolean fullCharged;
     private Sprite sprite;
     public boolean isCharging;
     private int retentionTime; // In ms
@@ -43,7 +52,7 @@ class Phone {
             chargingTime = 18;
         }
         if((model & Phone.DROID) != 0) {
-            retentionTime = 30;
+            retentionTime = 34;
             chargingTime = 18;
         }
         if((model & Phone.OLD_SCHOOL) != 0) {
@@ -51,11 +60,11 @@ class Phone {
             chargingTime = 24;
         }
         if((model & Phone.BEZEL_LESS) != 0) {
-            retentionTime = 28;
+            retentionTime = 42;
             chargingTime = 22;
         }
         if((model & Phone.BRICK) != 0) {
-            retentionTime = 50;
+            retentionTime = 70;
             chargingTime = 35;
         }
         this.charge = 0.5f;
@@ -72,11 +81,19 @@ class Phone {
 
     public void updateCharge(float delta, boolean connected) throws ChargeException {
         isCharging = connected;
-        if(connected)
+        if(connected && charge < 1)
             charge += delta / chargingTime;
         else charge -= delta / retentionTime;
-        if(charge > 1)
-            charge = 1;
+
+        if(charge < 0.2f && charge + delta /retentionTime > 0.2f) {
+            lowBattery.play(1);
+        }
+        if(charge > 1) {
+            if(!fullCharged)
+                highBattery.play(0.4f);
+            charge = 1.001f;
+            fullCharged = true;
+        }
         if (charge < 0)
             throw new ChargeException(this, ChargeException.DISCHARGE);
     }
