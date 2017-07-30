@@ -24,7 +24,7 @@ public class LDGame extends Game implements ScreenChangeCommunicator {
         AssetManager assetManager = new AssetManager();
         assetManager.load("phones.png", Texture.class);
         assetManager.load("chargers.png", Texture.class);
-        setScreen(new GameScreen(this));
+        setScreen(new MenuScreen(this));
     }
 
     @Override

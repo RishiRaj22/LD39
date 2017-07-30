@@ -25,6 +25,7 @@ class Phone {
     private int position;
     private float charge;
     private Sprite sprite;
+    public boolean isCharging;
     private int retentionTime; // In ms
     private int chargingTime; // In ms
     private float instatntiationTime;
@@ -70,11 +71,12 @@ class Phone {
     }
 
     public void updateCharge(float delta, boolean connected) throws ChargeException {
+        isCharging = connected;
         if(connected)
             charge += delta / chargingTime;
         else charge -= delta / retentionTime;
-        if (charge >= 1)
-            throw new ChargeException(this, ChargeException.OVERCHARGE);
+        if(charge > 1)
+            charge = 1;
         if (charge < 0)
             throw new ChargeException(this, ChargeException.DISCHARGE);
     }
@@ -115,5 +117,9 @@ class Phone {
 
     public float getInstatntiationTime() {
         return instatntiationTime;
+    }
+
+    public boolean isCharging() {
+        return isCharging;
     }
 }

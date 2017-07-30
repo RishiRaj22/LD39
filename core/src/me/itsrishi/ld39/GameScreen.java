@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,13 +26,15 @@ public class GameScreen implements Screen, InputProcessor {
     public static final int WIDTH = 1120;
     public static final int HEIGHT = 600;
     public static final int SCREEN_PHONE_COUNT = 7;
+    public static Color bgColor = new Color(192f / 255, 108f / 255, 53f / 255, 1);
     private static HashMap<Integer, Sprite> phoneSprites;
     private static HashMap<Integer, Sprite> chargerHeads;
     private final ScreenChangeCommunicator communicator;
     ShapeRenderer renderer;
-    Texture phoneTexture, chargerTexture;
+    Texture phoneTexture, chargerTexture, bgTexture;
     SpriteBatch batch;
     BitmapFont font = new BitmapFont();
+    Sound pluggedIn, pluggedOut;
     private Random random = new Random();
     private boolean begun = false;
     private ArrayList<Phone> phones;
@@ -42,6 +45,8 @@ public class GameScreen implements Screen, InputProcessor {
     private int score;
     private int lives = 3;
     private float time = 0;
+    private ArrayList<Float> addPhones = new ArrayList<Float>();
+    private Sprite handSprite;
 
 
     public GameScreen(ScreenChangeCommunicator communicator) {
@@ -58,9 +63,13 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        pluggedIn = Gdx.audio.newSound(Gdx.files.internal("plug_in.ogg"));
+        pluggedOut = Gdx.audio.newSound(Gdx.files.internal("plug_out.ogg"));
         Gdx.input.setInputProcessor(this);
         renderer = new ShapeRenderer();
         batch = new SpriteBatch();
+        bgTexture = new Texture("bg.png");
+        handSprite = new Sprite(new Texture("hand.png"));
         initPhoneSprites();
         initChargerSprites();// Charger sprite has a dependency on phone sprite. so call phone sprite init first
         phones = new ArrayList<Phone>();
@@ -138,6 +147,11 @@ public class GameScreen implements Screen, InputProcessor {
         phones.add(phone);
     }
 
+    private void schedulePhoneAdd(int position, float delay) {
+        addPhones.add(time + delay);
+        addPhones.add((float) position);
+    }
+
     private void submitPhone(Phone phone) {
         int pos = phone.getPosition();
         int rate = 1;
@@ -153,15 +167,17 @@ public class GameScreen implements Screen, InputProcessor {
         score += (phone.getCharge() - 0.5f) * 100 * rate;
 
         phones.remove(phone);
-        addPhone(pos);
+        schedulePhoneAdd(pos, 5 + (random.nextBoolean() ? 0 : 2));
     }
 
     private void initChargerSprites() {
         chargerTexture = new Texture("chargers.png");
         chargerHeads = new HashMap<Integer, Sprite>(6);
         chargerHeads.put(Charger.USB + Charger.COLOR_BLACK, new Sprite(new TextureRegion(phoneTexture, 0, 230, 350, 670)));
-        chargerHeads.put(Charger.OLD_SCHOOL + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 0, 0, 340, 240)));
-        chargerHeads.put(Charger.OLD_SCHOOL + Charger.COLOR_BLACK, new Sprite(new TextureRegion(chargerTexture, 370, 0, 323, 240)));
+        Sprite oldSchoolWhite = new Sprite(new TextureRegion(chargerTexture, 0, 0, 340, 240));
+        chargerHeads.put(Charger.OLD_SCHOOL + Charger.COLOR_WHITE, oldSchoolWhite);
+        Sprite oldSchoolBlack = new Sprite(new TextureRegion(chargerTexture, 370, 0, 323, 240));
+        chargerHeads.put(Charger.OLD_SCHOOL + Charger.COLOR_BLACK, oldSchoolBlack);
         chargerHeads.put(Charger.APPUL + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 70, 500, 185, 410)));
         chargerHeads.put(Charger.APPUL + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 70, 500, 185, 410)));
         chargerHeads.put(Charger.APPUL + Charger.COLOR_BLACK, new Sprite(new TextureRegion(chargerTexture, 400, 500, 200, 410)));
@@ -171,8 +187,11 @@ public class GameScreen implements Screen, InputProcessor {
             sprite.setOrigin(0, 0);
             float scale = desiredWidth / sprite.getWidth();
             sprite.setScale(scale, scale);
-            sprite.setY(HEIGHT - sprite.getHeight() * scale);
+            sprite.setY(HEIGHT - sprite.getHeight() * scale + 30);
         }
+        oldSchoolBlack.setY(oldSchoolBlack.getY() - 10);
+        oldSchoolWhite.setY(oldSchoolWhite.getY() - 10);
+
     }
 
     private void update(float delta) {
@@ -181,10 +200,18 @@ public class GameScreen implements Screen, InputProcessor {
         }
         time += delta;
         updatePhones(delta);
-
     }
 
     private void updatePhones(float delta) {
+        if (addPhones != null && addPhones.size() != 0) {
+            System.out.printf("%f seconds to go\n", time - addPhones.get(0));
+            if (time > addPhones.get(0)) {
+                float val = addPhones.get(1);
+                addPhone((int) val);
+                addPhones.remove(0);
+                addPhones.remove(0);
+            }
+        }
         outer:
         for (int i = 0; i < phones.size(); i++) {
             Phone phone = phones.get(i);
@@ -210,40 +237,40 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(192f / 255, 108f / 255, 53f / 255, 1);
+        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        drawFocussed();
+
+        batch.begin();
+        batch.draw(bgTexture, 0, 0, WIDTH, HEIGHT);
+        batch.end();
         drawWires(batch); //Batch begins inside drawWires method
-        drawBg(batch);
         if (!begun)
             font.draw(batch, "Press any key to start game", WIDTH / 2, HEIGHT / 2);
         else {
             font.draw(batch, "Score :" + score, 10, HEIGHT - 30);
             font.draw(batch, "Lives :" + lives, WIDTH - 100, HEIGHT - 30);
         }
-
         drawPhones(batch); //Batch ends inside drawPhones method
+        drawHand(); //Batch begins and ends inside this
         update(delta);
     }
 
-    private void drawSideBar(SpriteBatch batch) {
 
+    private void drawHand() {
+        batch.begin();
+        float x = GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT);
+        handSprite.setX(x - 10);
+        handSprite.setY(5);
+        if (focussedTop) {
+            handSprite.setY(HEIGHT - handSprite.getHeight() - 20);
+        }
+        if (focussedTop && chargerFocussed != null)
+            handSprite.setY(handSprite.getY() - 85);
+        handSprite.draw(batch);
+        handSprite.setY(handSprite.getY() + 85);
+        batch.end();
     }
 
-    private void drawFocussed() {
-        renderer.setAutoShapeType(true);
-        renderer.begin();
-        renderer.set(ShapeRenderer.ShapeType.Filled);
-        if (focussedTop)
-            renderer.rect(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT), HEIGHT - 20, GameScreen.WIDTH / SCREEN_PHONE_COUNT, 20);
-        else
-            renderer.rect(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT), 0, GameScreen.WIDTH / SCREEN_PHONE_COUNT, 20);
-        renderer.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-    }
-
-    private void drawBg(SpriteBatch batch) {
-    }
 
     private void drawWires(SpriteBatch batch) {
         Gdx.gl.glEnable(GL20.GL_ARRAY_BUFFER_BINDING);
@@ -270,18 +297,20 @@ public class GameScreen implements Screen, InputProcessor {
             if ((charger.getType() & Charger.COLOR_WHITE) != 0)
                 renderer.setColor(Color.WHITE);
             else renderer.setColor(Color.BLACK);
-            renderer.rect(sprite.getX() + charger.getWireXOffset(), 100 + sprite.getOriginY(), 5, HEIGHT - 135);
+            renderer.rect(sprite.getX() + charger.getWireXOffset(), 20, 5, HEIGHT - 35 );
         }
         renderer.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);
         batch.begin();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
         for (Charger charger : chargers) {
             if (charger.getPosition() < 0) {
                 Sprite sprite = charger.getSprite();
+                float y = sprite.getY();
+                sprite.setY(HEIGHT - 200);
                 sprite.setX(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT));
                 charger.getSprite().draw(batch);
-            }
-            charger.getSprite().draw(batch);
+                sprite.setY(y);
+            } else charger.getSprite().draw(batch);
         }
     }
 
@@ -304,7 +333,7 @@ public class GameScreen implements Screen, InputProcessor {
             renderer.setColor(Color.GREEN);
             renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight() * phone.getCharge());
 
-            if (phone.getCharge() > 0.75f || phone.getCharge() < 0.25f) {
+            if (phone.getCharge() < 0.2f && !phone.isCharging) {
                 renderer.setColor(Color.RED);
                 renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160, 10, 30);
                 renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160 - 10, 10, 5);
@@ -376,6 +405,7 @@ public class GameScreen implements Screen, InputProcessor {
             if (chargerFocussed == null) {
                 for (Charger charger : chargers) {
                     if (charger.getPosition() == focussed) {
+                        pluggedOut.play();
                         chargerFocussed = charger;
                     }
                 }
@@ -389,6 +419,7 @@ public class GameScreen implements Screen, InputProcessor {
                         if (phone.getPosition() == focussed) {
                             if (chargerFocussed.isModelCompatible(phone.getModel())) {
                                 chargerFocussed.setPosition(focussed);
+                                pluggedIn.play();
                                 chargerFocussed = charger;
                                 chargerFocussed.setPosition(-1);
                                 return true;
@@ -397,6 +428,7 @@ public class GameScreen implements Screen, InputProcessor {
                     }
                     chargerFocussed.setPosition(focussed);
                     chargerFocussed = charger;
+                    pluggedIn.play();
                     chargerFocussed.setPosition(-1);
                     return true;
                 }
@@ -406,11 +438,13 @@ public class GameScreen implements Screen, InputProcessor {
                     if (chargerFocussed.isModelCompatible(phone.getModel())) {
                         chargerFocussed.setPosition(focussed);
                         chargerFocussed = null;
+                        pluggedIn.play();
                         return true;
                     }
                 }
             }
             chargerFocussed.setPosition(focussed);
+            pluggedIn.play();
             chargerFocussed = null;
         }
         return false;
