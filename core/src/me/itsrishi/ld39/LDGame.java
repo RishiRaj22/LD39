@@ -58,4 +58,15 @@ public class LDGame extends Game implements ScreenChangeCommunicator {
         });
         thread.start();
     }
+
+    @Override
+    public void changeScreenTo(final Screen screen) {
+        final Runnable newScreen = new Runnable() {
+            @Override
+            public void run() {
+                setScreen(screen);
+            }
+        };
+            Gdx.app.postRunnable(newScreen);
+    }
 }

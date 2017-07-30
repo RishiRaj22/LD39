@@ -1,6 +1,7 @@
 package me.itsrishi.ld39;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import java.security.Key;
 import java.util.IllegalFormatWidthException;
 
 /**
@@ -18,12 +20,14 @@ import java.util.IllegalFormatWidthException;
 public class GameOverScreen implements Screen, InputProcessor {
     private final ScreenChangeCommunicator communicator;
     private boolean restart;
+    private int score;
     ShapeRenderer renderer = new ShapeRenderer();
     SpriteBatch batch = new SpriteBatch();
     BitmapFont font = new BitmapFont();
 
-    public GameOverScreen(ScreenChangeCommunicator communicator) {
+    public GameOverScreen(ScreenChangeCommunicator communicator,int score) {
         this.communicator = communicator;
+        this.score = score;
     }
     @Override
     public void show() {
@@ -39,12 +43,13 @@ public class GameOverScreen implements Screen, InputProcessor {
         //Add render shapes
         renderer.end();
         batch.begin();
-        font.draw(batch, "Game over", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        font.draw(batch, "Game over: Press R to restart", Gdx.graphics.getWidth() / 2 - 50, Gdx.graphics.getHeight() / 2);
+        font.draw(batch, "Score: "+score, Gdx.graphics.getWidth() / 2 - 20, Gdx.graphics.getHeight() / 2 + 40);
         batch.end();
         if(restart) {
             GameScreen screen = new GameScreen(communicator);
             dispose();
-            communicator.changeScreenTo(screen,0,Color.RED);
+            communicator.changeScreenTo(screen);
         }
         Gdx.input.setInputProcessor(this);
     }
@@ -56,10 +61,6 @@ public class GameOverScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
-        font.dispose();
-        if(batch.isDrawing())
-            batch.end();
-        batch.dispose();
     }
 
     @Override
@@ -86,7 +87,8 @@ public class GameOverScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        restart = true;
+        if(keycode == Input.Keys.R)
+            restart = true;
         return true;
     }
 

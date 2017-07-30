@@ -9,4 +9,5 @@ import com.badlogic.gdx.graphics.Color;
 
 public interface ScreenChangeCommunicator {
     void changeScreenTo(Screen screen, float transitionTime, Color transitionColor);
+    void changeScreenTo(Screen screen);
 }

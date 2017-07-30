@@ -27,33 +27,35 @@ class Phone {
     private Sprite sprite;
     private int retentionTime; // In ms
     private int chargingTime; // In ms
+    private float instatntiationTime;
 
     //Object permanent state
     private int model;
 
-    public Phone(int position, int model) {
+    public Phone(int position, int model, float time) {
+        this.instatntiationTime = time;
         this.model = model;
         this.sprite = new Sprite(GameScreen.getPhoneSprites().get(model));
         setPosition(position);
         if((model & Phone.APPUL) != 0) {
-            retentionTime = 24;
-            chargingTime = 14;
+            retentionTime = 30;
+            chargingTime = 18;
         }
         if((model & Phone.DROID) != 0) {
-            retentionTime = 24;
-            chargingTime = 15;
+            retentionTime = 30;
+            chargingTime = 18;
         }
         if((model & Phone.OLD_SCHOOL) != 0) {
-            retentionTime = 45;
-            chargingTime = 14;
+            retentionTime = 60;
+            chargingTime = 24;
         }
         if((model & Phone.BEZEL_LESS) != 0) {
-            retentionTime = 22;
-            chargingTime = 14;
+            retentionTime = 28;
+            chargingTime = 22;
         }
         if((model & Phone.BRICK) != 0) {
-            retentionTime = 38;
-            chargingTime = 24;
+            retentionTime = 50;
+            chargingTime = 35;
         }
         this.charge = 0.5f;
     }
@@ -109,5 +111,9 @@ class Phone {
         if((model & Phone.OLD_SCHOOL) != 0)
             return 30;
         return 50 ;
+    }
+
+    public float getInstatntiationTime() {
+        return instatntiationTime;
     }
 }

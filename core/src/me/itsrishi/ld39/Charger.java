@@ -57,8 +57,6 @@ public class Charger {
     }
 
     public boolean isModelCompatible(int model) {
-        if (model % 4 != type % 4)
-            return false;
         if ((model & Phone.BRICK) != 0 || (model & Phone.DROID) != 0 || (model & Phone.BEZEL_LESS) != 0) {
             if ((type & USB) != 0)
                 return true;
