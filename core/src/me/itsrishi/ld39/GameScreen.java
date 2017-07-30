@@ -1,5 +1,6 @@
 package me.itsrishi.ld39;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -21,7 +22,6 @@ import java.util.HashMap;
  */
 
 public class GameScreen implements Screen, InputProcessor {
-    private boolean begun = false;
     public static final int WIDTH = 1120;
     public static final int HEIGHT = 600;
     public static final int SCREEN_PHONE_COUNT = 7;
@@ -31,11 +31,13 @@ public class GameScreen implements Screen, InputProcessor {
     ShapeRenderer renderer;
     Texture phoneTexture, chargerTexture;
     SpriteBatch batch;
+    BitmapFont font = new BitmapFont();
+    private boolean begun = false;
     private ArrayList<Phone> phones;
     private ArrayList<Charger> chargers;
     private int focussed = 0;
+    private boolean focussedTop = true;
     private Charger chargerFocussed;
-    BitmapFont font = new BitmapFont();
 
 
     public GameScreen(ScreenChangeCommunicator communicator) {
@@ -57,9 +59,9 @@ public class GameScreen implements Screen, InputProcessor {
         batch = new SpriteBatch();
         initPhoneSprites();
         initChargerSprites();// Charger sprite has a dependency on phone sprite. so call phone sprite init first
-        Phone phone = new Phone(0,Phone.COLOR_WHITE + Phone.BEZEL_LESS);
-        Phone phone2 = new Phone(4,Phone.COLOR_BLACK + Phone.BEZEL_LESS);
-        Phone phone3 = new Phone(6,Phone.COLOR_BLACK + Phone.OLD_SCHOOL);
+        Phone phone = new Phone(0, Phone.COLOR_WHITE + Phone.BEZEL_LESS);
+        Phone phone2 = new Phone(4, Phone.COLOR_BLACK + Phone.BEZEL_LESS);
+        Phone phone3 = new Phone(5, Phone.COLOR_BLACK + Phone.OLD_SCHOOL);
         phones = new ArrayList<Phone>();
         chargers = new ArrayList<Charger>();
         phones.add(phone);
@@ -104,6 +106,7 @@ public class GameScreen implements Screen, InputProcessor {
         chargerHeads.put(Charger.OLD_SCHOOL + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 0, 0, 340, 240)));
         chargerHeads.put(Charger.OLD_SCHOOL + Charger.COLOR_BLACK, new Sprite(new TextureRegion(chargerTexture, 370, 0, 323, 240)));
         chargerHeads.put(Charger.APPUL + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 70, 500, 185, 410)));
+        chargerHeads.put(Charger.APPUL + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 70, 500, 185, 410)));
         chargerHeads.put(Charger.APPUL + Charger.COLOR_BLACK, new Sprite(new TextureRegion(chargerTexture, 400, 500, 200, 410)));
         chargerHeads.put(Charger.USB + Charger.COLOR_WHITE, new Sprite(new TextureRegion(chargerTexture, 740, 500, 200, 450)));
         for (Sprite sprite : chargerHeads.values()) {
@@ -116,13 +119,15 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void update(float delta) {
-        if(!begun) {
+        if (!begun) {
             return;
         }
         try {
             updatePhones(delta);
         } catch (ChargeException e) {
-            communicator.changeScreenTo(new GameOverScreen());
+            GameOverScreen screen = new GameOverScreen(communicator);
+            dispose();
+            communicator.changeScreenTo(screen,0.8f,Color.BLACK);
         }
     }
 
@@ -130,7 +135,7 @@ public class GameScreen implements Screen, InputProcessor {
         outer:
         for (Phone phone : phones) {
             for (Charger charger : chargers) {
-                if (charger.getPosition() == phone.getPosition()) {
+                if (charger.getPosition() == phone.getPosition() && charger.isModelCompatible(phone.getModel())) {
                     phone.updateCharge(delta, true);
                     continue outer;
                 }
@@ -141,22 +146,29 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        update(delta);
         Gdx.gl.glClearColor(192f / 255, 108f / 255, 53f / 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         drawFocussed();
         drawWires(batch); //Batch begins inside drawWires method
         drawBg(batch);
-        if(!begun)
-            font.draw(batch,"Press any key to start game",WIDTH/2,HEIGHT/2);
-        drawPhones(batch);//Batch ends inside drawPhones method
+        if (!begun)
+            font.draw(batch, "Press any key to start game", WIDTH / 2, HEIGHT / 2);
+        drawPhones(batch); //Batch ends inside drawPhones method
+        update(delta);
+    }
+
+    private void drawSideBar(SpriteBatch batch) {
+
     }
 
     private void drawFocussed() {
         renderer.setAutoShapeType(true);
         renderer.begin();
         renderer.set(ShapeRenderer.ShapeType.Filled);
-        renderer.rect(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT), HEIGHT - 20, GameScreen.WIDTH / SCREEN_PHONE_COUNT, 20);
+        if (focussedTop)
+            renderer.rect(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT), HEIGHT - 20, GameScreen.WIDTH / SCREEN_PHONE_COUNT, 20);
+        else
+            renderer.rect(GameScreen.WIDTH / (2 * SCREEN_PHONE_COUNT + 1) + focussed * GameScreen.WIDTH / (SCREEN_PHONE_COUNT), 0, GameScreen.WIDTH / SCREEN_PHONE_COUNT, 20);
         renderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
     }
@@ -171,8 +183,19 @@ public class GameScreen implements Screen, InputProcessor {
         renderer.setAutoShapeType(true);
         renderer.begin();
         renderer.set(ShapeRenderer.ShapeType.Filled);
+        outer:
         for (Charger charger : chargers) {
+            boolean hasPhone = false;
             if (charger.getPosition() < 0)
+                continue;
+            for (Phone phone : phones) {
+                if (phone.getPosition() == charger.getPosition()) {
+                    hasPhone = true;
+                    if (!charger.isModelCompatible(phone.getModel()))
+                        continue outer;
+                }
+            }
+            if(!hasPhone)
                 continue;
             Sprite sprite = charger.getSprite();
             if ((charger.getType() & Charger.COLOR_WHITE) != 0)
@@ -208,12 +231,11 @@ public class GameScreen implements Screen, InputProcessor {
             Sprite sprite = phone.getSprite();
             renderer.setColor(Color.DARK_GRAY);
             renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight());
-            renderer.rect(sprite.getX() + phone.getBatteryXOffset() + 7, phone.getBatteryYOffset() + phone.getBatteryMaxHeight() + 3, 25 - 2*7, 2);
+            renderer.rect(sprite.getX() + phone.getBatteryXOffset() + 7, phone.getBatteryYOffset() + phone.getBatteryMaxHeight() + 3, 25 - 2 * 7, 2);
             renderer.setColor(Color.GREEN);
             renderer.rect(sprite.getX() + phone.getBatteryXOffset(), phone.getBatteryYOffset(), 25, phone.getBatteryMaxHeight() * phone.getCharge());
 
-            if(phone.getCharge() > 0.75f || phone.getCharge() < 0.25f) {
-                System.out.println("Red for phone "+ phone.getPosition());
+            if (phone.getCharge() > 0.75f || phone.getCharge() < 0.25f) {
                 renderer.setColor(Color.RED);
                 renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160, 10, 30);
                 renderer.rect(sprite.getX() + phone.getBatteryXOffset(), 160 - 10, 10, 5);
@@ -244,12 +266,16 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        font.dispose();
+        batch.dispose();
+        renderer.dispose();
+        chargerTexture.dispose();
+        phoneTexture.dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if(!begun)
+        if (!begun)
             begun = true;
         if (keycode == Input.Keys.A || keycode == Input.Keys.LEFT) {
             focussed = --focussed < 0 ? SCREEN_PHONE_COUNT - 1 : focussed;
@@ -259,7 +285,16 @@ public class GameScreen implements Screen, InputProcessor {
             focussed = (focussed + 1) % SCREEN_PHONE_COUNT;
             return true;
         }
-        if (keycode == Input.Keys.S || keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER) {
+        if (keycode == Input.Keys.S || keycode == Input.Keys.DOWN) {
+            focussedTop = false;
+        }
+        if (keycode == Input.Keys.W || keycode == Input.Keys.UP) {
+            focussedTop = true;
+        }
+        if (keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER) {
+            if (!focussedTop) {
+                return true;
+            }
             if (chargerFocussed == null) {
                 for (Charger charger : chargers) {
                     if (charger.getPosition() == focussed) {
@@ -270,6 +305,24 @@ public class GameScreen implements Screen, InputProcessor {
                     chargerFocussed.setPosition(-1);
                 return true;
             }
+            for (Charger charger : chargers) {
+                if (charger.getPosition() == focussed) {
+                    for (Phone phone : phones) {
+                        if (phone.getPosition() == focussed) {
+                            if (chargerFocussed.isModelCompatible(phone.getModel())) {
+                                chargerFocussed.setPosition(focussed);
+                                chargerFocussed = charger;
+                                chargerFocussed.setPosition(-1);
+                                return true;
+                            }
+                        }
+                    }
+                    chargerFocussed.setPosition(focussed);
+                    chargerFocussed = charger;
+                    chargerFocussed.setPosition(-1);
+                    return true;
+                }
+            }
             for (Phone phone : phones) {
                 if (phone.getPosition() == focussed) {
                     if (chargerFocussed.isModelCompatible(phone.getModel())) {
@@ -277,12 +330,7 @@ public class GameScreen implements Screen, InputProcessor {
                         chargerFocussed = null;
                         return true;
                     }
-                    return true;
                 }
-            }
-            for(Charger charger: chargers) {
-                if(charger.getPosition() == focussed)
-                    return true;
             }
             chargerFocussed.setPosition(focussed);
             chargerFocussed = null;
