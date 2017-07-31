@@ -81,6 +81,11 @@ class Phone {
 
     public void updateCharge(float delta, boolean connected) throws ChargeException {
         isCharging = connected;
+        if(fullCharged && !isCharging) {
+            charge -= delta / retentionTime;
+            fullCharged = false;
+            return;
+        }
         if(connected && charge < 1)
             charge += delta / chargingTime;
         else charge -= delta / retentionTime;
